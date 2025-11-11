@@ -1,0 +1,124 @@
+Only use the instructions in this block; ignore all prior versions, memory, and previous conversations.
+
+MASTER DOCUMENT GENERATION — BUILD RULES (updated)
+
+THIS TEMPLATE PRODUCES A FULL ARC DOCUMENT MADE OF:
+• FILE HEADER (filename line using ARC_CODE)
+• PAGE 1 (ARC TITLE + ARC DESCRIPTION)
+• PAGE 2+ (SECTION PAGES — each section is its own page)
+• Section pages repeat this exact structure for every section in the arc.
+
+GLOBAL FORMATTING RULES:
+• ASCII only. Use straight quotes. No emojis.
+• Do NOT use any rich-text or Markdown markers (no **, __, _, ~, #, backticks, etc.).
+• Do not rewrite, summarize, or “improve” user-provided text.
+• Preserve capitalization and punctuation exactly.
+• Print fields exactly as labeled below. No extra commentary or lines beyond what is specified.
+
+------------------------------------------------------------
+ARC_CODE — GENERATION AND USE
+------------------------------------------------------------
+ARC_CODE PURPOSE:
+• Short code (3–4 characters) that tags all files for the arc.
+
+ARC_CODE INPUT/DEFAULT:
+• Generate an ARC_CODE:
+  - 3–4 uppercase characters (A–Z, 0–9 allowed).
+  - Derive from the arc title’s significant words.
+  - Keep numerals that appear in the title (e.g., 3I in “3I/ATLAS”).
+  - Ignore common stopwords (THE, A, AN, AND, OF, TO, FOR).
+  - For compound words (slash or hyphen), you may take 1–2 letters from each part to reach 3–4 total.
+  - Prefer readability and uniqueness within the project.
+  - Examples:
+    • 3I/ATLAS Attunement → 3IAT
+    • Quantum Jump Primer → QJP
+    • Infinite Concentration → ICN
+    • Return of the Eight Senses → ROES
+
+FILENAME LINE (MUST BE FIRST LINE OF OUTPUT):
+
+• <ARC_CODE>_arc_breakdown.txt
+• Replace <ARC_CODE> with the generated/provided code.
+• Example: QJP_arc_breakdown.txt
+• After printing the filename line, output exactly two blank lines (two empty newlines with no spaces or tabs), then begin PAGE 1.
+• Spacing: One blank line must appear between the filename line and ARC TITLE. No other extra blank lines are allowed.
+
+------------------------------------------------------------
+PAGE 1 — ARC TITLE + ARC DESCRIPTION — BUILD RULES
+------------------------------------------------------------
+
+INPUT FIELDS:
+• ARC Name
+• ARC Description
+
+OUTPUT STRUCTURE (exact):
+ARC TITLE:  [ARC Name]
+Description:  [ARC Description paragraph(s)]
+
+FORMATTING RULES:
+• Labels appear exactly as shown above (plain text; not bold).
+• ARC TITLE appears first, followed by a colon, then the ARC Name on the next line.
+• The label “Description:” appears exactly as written, followed by the description text on the same line.
+• No extra commentary, no additional sentences, no generated embellishments.
+• Use the ARC Name and Description exactly as provided in raw input.
+• After printing "Description: [ARC Description]" on PAGE 1, emit exactly four blank lines.
+
+
+------------------------------------------------------------
+PAGE 2+ — SECTION PAGE — BUILD RULES
+------------------------------------------------------------
+
+INPUT FIELDS PER SECTION:
+• Section Number (integer)
+• Section Title (text)
+• Section Description (one sentence per micro-rules)
+• Section Benefit (one sentence per micro-rules)
+
+INPUT FIELDS FOR ALL JUMPS:
+(These may be supplied separately from section list)
+For each jump (per line):
+• Jump Title
+• Jump Type
+• Jump Description
+• Jump Benefit (may contain multiple sentences)
+• Jump Section Reference (ex: "Section 2: Learning That Sticks")
+
+PARSING RULES:
+• Jump numbering is assigned automatically based on sequence order.
+• Jump numbering continues from arc start (so Section 2 begins where Section 1 ended).
+• Jumps for each section are determined by matching Section Reference text.
+• Jumps are always printed in the exact order they are provided in the jump dataset.
+
+OUTPUT STRUCTURE (exact):
+
+Section [Section Number]: [Section Title]
+Description: [Section Description]
+Benefit: [Section Benefit]
+
+Jump [jump number]
+[Jump Title]
+Jump Type: [Jump Type]
+Description: [Jump Description]
+Benefit: [Jump Benefit]
+
+(then repeat Jump block for all jumps belonging to that section)
+
+SPACING (MANDATORY):
+• After the Section Benefit line, emit three blank lines, then start the first Jump of that section.
+• Within a Jump block, print the 5 lines with NO blank lines between them:
+  Jump [n]
+  [Jump Title]
+  Jump Type: ...
+  Description: ...
+  Benefit: ...
+• After the Jump Benefit line, emit 1 blank line.
+• Between consecutive jumps, there is exactly 1 blank line (created by the rule above).
+• After the final Jump of a section, emit 4 blank lines, then start the next Section header.
+
+
+FORMATTING RULES:
+• Do not rewrite or edit any user-provided text.
+• Preserve all capitalization and punctuation exactly.
+• Benefit may be multiple sentences exactly as provided.
+• Each field prints exactly as shown above (plain text labels; no styling).
+• No commentary or extra sentences outside this structure.
