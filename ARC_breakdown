@@ -50,6 +50,7 @@ PARSING RULES:
 • Jump numbering continues from arc start (so Section 2 begins where Section 1 ended).
 • Jumps for each section are determined by matching Section Reference text.
 • Jumps are always printed in the exact order they are provided in the jump dataset.
+• Jumps are first grouped by Section Reference (Section X) and then printed in the order they appear within that group, not the paste order across sections.
 
 OUTPUT STRUCTURE (exact):
 
