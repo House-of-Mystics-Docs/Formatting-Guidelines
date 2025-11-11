@@ -1,4 +1,4 @@
-MASTER DOCUMENT GENERATION — BUILD RULES (FINALIZED, NON-BLOCKING, RENDERED BY DEFAULT)
+MASTER DOCUMENT GENERATION — BUILD RULES (FINALIZED, NON-BLOCKING, RENDERED BY DEFAULT — ARC_CODE PROVIDED)
 
 THIS TEMPLATE PRODUCES A FULL ARC DOCUMENT MADE OF:
 • FILE HEADER (filename line using ARC_CODE)
@@ -20,33 +20,16 @@ OUTPUT MODE (IMPORTANT):
   - If this flag is absent, you MUST emit RENDERED output (no [LB]/[SP] visible).
 
 ------------------------------------------------------------
-ARC_CODE — GENERATION AND USE (NON-BLOCKING)
+FILE HEADER — ARC_CODE (PROVIDED BY USER)
 ------------------------------------------------------------
-Purpose:
-• Short code (3–4 characters) that tags all files for the arc.
-
-Input / Default:
-• If ARC_CODE is provided by the user, use it exactly.
-• If ARC_CODE is NOT provided, AUTO-GENERATE (do not prompt):
-  - 3–4 uppercase chars; A–Z and 0–9 allowed.
-  - Derive from significant words in the arc title.
-  - Keep numerals present in the title (e.g., 3I in “3I/ATLAS”).
-  - Ignore stopwords (THE, A, AN, AND, OF, TO, FOR).
-  - For compounds (slash/hyphen), you may take 1–2 letters from each part to reach 3–4.
-  - Prefer readability and project-unique codes.
-  - Examples: 3I/ATLAS Attunement → 3IAT; Quantum Jump Primer → QJP; Infinite Concentration → ICN; Return of the Eight Senses → ROES.
-
-Collision handling:
-• If the auto-generated ARC_CODE conflicts with an existing arc in the same project, append a digit (e.g., QJP2). Do not prompt; proceed.
+Requirement:
+• The ARC_CODE is provided in the prompt. Use it EXACTLY as given. Do not alter, expand, or auto-generate.
 
 Filename line (MUST BE FIRST OUTPUT LINE):
 • RENDERED: <ARC_CODE>_arc_breakdown.txt
 • RAW WITH MARKERS: <ARC_CODE>_arc_breakdown.txt[LB]
 • After the filename line: exactly one blank line (RENDERED) or one [SP] (RAW).
-
-Operator policy:
-• Never halt to ask for ARC_CODE. Auto-generate if absent.
-• If the user later supplies a different ARC_CODE, accept it and regenerate.
+• Do not prompt for ARC_CODE. If not supplied, stop and return a single-line error: MISSING ARC_CODE.
 
 ------------------------------------------------------------
 PAGE 1 — ARC TITLE + ARC DESCRIPTION — BUILD RULES
