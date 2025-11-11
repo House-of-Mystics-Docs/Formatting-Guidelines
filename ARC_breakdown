@@ -1,9 +1,43 @@
-MASTER DOCUMENT GENERATION — BUILD RULES
+MASTER DOCUMENT GENERATION — BUILD RULES (updated)
 
 THIS TEMPLATE PRODUCES A FULL ARC DOCUMENT MADE OF:
+• FILE HEADER (filename line using ARC_CODE)
 • PAGE 1 (ARC TITLE + ARC DESCRIPTION)
 • PAGE 2+ (SECTION PAGES — each section is its own page)
 • Section pages repeat this exact structure for every section in the arc.
+
+GLOBAL FORMATTING RULES:
+• ASCII only. Use straight quotes. No emojis.
+• Do NOT use any rich-text or Markdown markers (no **, __, _, ~, #, backticks, etc.).
+• Do not rewrite, summarize, or “improve” user-provided text.
+• Preserve capitalization and punctuation exactly.
+• Print fields exactly as labeled below. No extra commentary or lines beyond what is specified.
+
+------------------------------------------------------------
+ARC_CODE — GENERATION AND USE
+------------------------------------------------------------
+ARC_CODE PURPOSE:
+• Short code (3–4 characters) that tags all files for the arc.
+
+ARC_CODE INPUT/DEFAULT:
+• If an ARC_CODE is provided by the user, use it exactly as given.
+• If not provided, generate one:
+  - 3–4 uppercase characters (A–Z, 0–9 allowed).
+  - Derive from the arc title’s significant words.
+  - Keep numerals that appear in the title (e.g., 3I in “3I/ATLAS”).
+  - Ignore common stopwords (THE, A, AN, AND, OF, TO, FOR).
+  - For compound words (slash or hyphen), you may take 1–2 letters from each part to reach 3–4 total.
+  - Prefer readability and uniqueness within the project.
+  - Examples:
+    • 3I/ATLAS Attunement → 3IAT
+    • Quantum Jump Primer → QJP
+    • Infinite Concentration → ICN
+    • Return of the Eight Senses → ROES
+
+FILENAME LINE (MUST BE FIRST LINE OF OUTPUT):
+• <ARC_CODE>_arc_breakdown.txt
+• Replace <ARC_CODE> with the generated/provided code.
+• Example: QJP_arc_breakdown.txt
 
 ------------------------------------------------------------
 PAGE 1 — ARC TITLE + ARC DESCRIPTION — BUILD RULES
@@ -15,16 +49,14 @@ INPUT FIELDS:
 
 OUTPUT STRUCTURE (exact):
 ARC TITLE:  [ARC Name]
-
 Description:  [ARC Description paragraph(s)]
 
 FORMATTING RULES:
-• ARC TITLE appears first, bolded, followed by a colon, then a line break, then the ARC Name on the next line.
-• The word “Description:” appears exactly as written, bolded, followed by a colon.
-• The ARC Description text appears immediately after “Description:” on the same line.
+• Labels appear exactly as shown above (plain text; not bold).
+• ARC TITLE appears first, followed by a colon, then the ARC Name on the next line.
+• The label “Description:” appears exactly as written, followed by the description text on the same line.
 • No extra commentary, no additional sentences, no generated embellishments.
 • Use the ARC Name and Description exactly as provided in raw input.
-
 
 ------------------------------------------------------------
 PAGE 2+ — SECTION PAGE — BUILD RULES
@@ -50,18 +82,17 @@ PARSING RULES:
 • Jump numbering continues from arc start (so Section 2 begins where Section 1 ended).
 • Jumps for each section are determined by matching Section Reference text.
 • Jumps are always printed in the exact order they are provided in the jump dataset.
-• Jumps are first grouped by Section Reference (Section X) and then printed in the order they appear within that group, not the paste order across sections.
 
 OUTPUT STRUCTURE (exact):
 
-Section [Section Number]: [Section Title]  
-Description: [Section Description]  
+Section [Section Number]: [Section Title]
+Description: [Section Description]
 Benefit: [Section Benefit]
 
-Jump [jump number]  
-[Jump Title]  
-Jump Type: [Jump Type]  
-Description: [Jump Description]  
+Jump [jump number]
+[Jump Title]
+Jump Type: [Jump Type]
+Description: [Jump Description]
 Benefit: [Jump Benefit]
 
 (then repeat Jump block for all jumps belonging to that section)
@@ -70,5 +101,5 @@ FORMATTING RULES:
 • Do not rewrite or edit any user-provided text.
 • Preserve all capitalization and punctuation exactly.
 • Benefit may be multiple sentences exactly as provided.
-• Each field prints exactly as shown above.
+• Each field prints exactly as shown above (plain text labels; no styling).
 • No commentary or extra sentences outside this structure.
