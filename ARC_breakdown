@@ -13,11 +13,14 @@ GLOBAL FORMATTING RULES:
 • Preserve capitalization and punctuation exactly.
 • Print fields exactly as labeled. No extra commentary or extra lines.
 
-OUTPUT MODE (IMPORTANT):
-• DEFAULT = RENDERED (no [LB]/[SP] tokens in the output).
-• RAW WITH MARKERS is allowed ONLY if the request explicitly includes the flag:
-  RAW_WITH_MARKERS: TRUE
-  - If this flag is absent, you MUST emit RENDERED output (no [LB]/[SP] visible).
+OUTPUT MODE SWITCHES (NON-BLOCKING — NEVER PROMPT):
+• RAW_WITH_MARKERS:
+  - Absent or FALSE → emit RENDERED (no [LB]/[SP] tokens).
+  - TRUE → emit RAW WITH MARKERS (use [LB]/[SP]).
+• SECTION_TITLES:
+  - Absent → INCLUDE section titles (canonical default).
+  - OMIT → omit section titles entirely.
+(If neither switch is present, assume RENDERED + INCLUDE. Never ask for confirmation.)
 
 ------------------------------------------------------------
 FILE HEADER — ARC_CODE (PROVIDED BY USER)
@@ -27,9 +30,9 @@ Requirement:
 
 Filename line (MUST BE FIRST OUTPUT LINE):
 • RENDERED: <ARC_CODE>_arc_breakdown.txt
-• RAW WITH MARKERS: <ARC_CODE>_arc_breakdown.txt[LB]
+• RAW: <ARC_CODE>_arc_breakdown.txt[LB]
 • After the filename line: exactly one blank line (RENDERED) or one [SP] (RAW).
-• Do not prompt for ARC_CODE. If not supplied, stop and return a single-line error: MISSING ARC_CODE.
+• If ARC_CODE is missing, stop and output a single line: MISSING ARC_CODE
 
 ------------------------------------------------------------
 PAGE 1 — ARC TITLE + ARC DESCRIPTION — BUILD RULES
@@ -45,7 +48,7 @@ ARC TITLE:  [ARC Name]
 Description:  [ARC Description paragraph(s)]
 <blank line>
 
-Output (RAW WITH MARKERS):
+Output (RAW):
 [SP]
 ARC TITLE:  [ARC Name][LB]
 [SP]
@@ -53,8 +56,7 @@ Description:  [ARC Description paragraph(s)][LB]
 [SP]
 
 Non-blocking:
-• If ARC Name and ARC Description exist, print them as-is with no confirmations.
-• Only prompt if either field is missing.
+• If ARC Name and ARC Description exist, print them as-is. Only prompt if a field is missing.
 
 Formatting:
 • Labels are plain text. “ARC TITLE:” and the name appear on the same line.
@@ -65,31 +67,27 @@ Formatting:
 SECTION DESCRIPTION & BENEFIT — MICRO-RULE ENFORCEMENT (NO PROMPTS)
 ------------------------------------------------------------
 Purpose:
-• Ensure Section Description and Section Benefit conform to the canonical one-line formats used in examples.
+• Ensure Section Description and Section Benefit match canonical one-line formats.
 
 Rule:
-• ALWAYS output Section Description and Section Benefit as SINGLE sentences using the templates below.
-• This normalization is the ONLY allowed rewrite in this document and is NON-BLOCKING (never ask for confirmation).
+• ALWAYS output each as a SINGLE sentence using the templates below. This normalization is the ONLY permitted rewrite and is NON-BLOCKING.
 
 Templates:
-• Section Description (must start exactly as written):
+• Section Description:
   This section is about [gain 1], [gain 2], and [gain 3] so [practical outcome].
-
-• Section Benefit (must start exactly as written):
+• Section Benefit:
   The benefit of this section is that you will [benefit 1], [benefit 2], [benefit 3], and [benefit 4].
 
-Auto-normalization algorithm (deterministic):
-1) SOURCE: If the user supplies paragraph-style text, extract up to three core “gains” (capabilities/skills/qualities) from that text.
-   - Prefer concise noun/verb phrases already present.
-   - If more than three appear, select the most central three; if fewer than three, borrow missing items from the section’s Benefit text.
-2) OUTCOME: Derive one practical outcome clause from the same source (or from the Benefit if clearer). Keep it concrete and life-anchored.
-3) BENEFIT: If the provided benefit spans multiple sentences or extra clauses, compress into one sentence with comma-separated items (up to four), preserving meaning without adding new claims.
-4) STYLE: Plain present tense; simple words; ASCII only.
-5) SAFETY: Do not invent new domain content; only recombine/shorten what the user supplied for that section.
+Normalization algorithm (deterministic):
+1) From the supplied text, extract up to three core “gains.” If >3, pick the central three; if <3, borrow missing items from the section’s Benefit text.
+2) Derive one practical outcome clause from the same source (or Benefit if clearer).
+3) Compress the Benefit to one sentence with up to four comma-separated items, preserving meaning without adding claims.
+4) Plain present tense; simple words; ASCII only.
+5) Do not invent new domain content; only recombine/shorten what was supplied.
 
-Conflict precedence:
-• If user-provided lines already match the templates exactly, print them unchanged.
-• Otherwise normalize per the algorithm above. Do NOT prompt the user.
+Precedence:
+• If user lines already match the templates exactly, print them unchanged.
+• Otherwise normalize per the algorithm. Do NOT prompt.
 
 ------------------------------------------------------------
 PAGE 2+ — SECTION PAGES — BUILD RULES
@@ -97,8 +95,8 @@ PAGE 2+ — SECTION PAGES — BUILD RULES
 Inputs per section:
 • Section Number (integer)
 • Section Title (text)
-• Section Description (may be paragraph or one-liner; will be normalized per rules above)
-• Section Benefit (may be paragraph or one-liner; will be normalized per rules above)
+• Section Description (paragraph or one-liner; will be normalized)
+• Section Benefit (paragraph or one-liner; will be normalized)
 
 Inputs for all jumps:
 For each jump:
@@ -109,48 +107,56 @@ For each jump:
 • Jump Section Reference (e.g., "Section 2: Learning That Sticks")
 
 Parsing:
-• Jump numbering is assigned by provided sequence and continues across sections.
+• Jump numbering follows provided sequence and continues across sections.
 • Section membership derives from Jump Section Reference.
 • Jumps are grouped by their Section Reference and printed in that group’s order.
 
-Output (RENDERED default):
-<blank line>
-Section [Section Number]: [Section Title]
-Description: [Section Description (normalized one-liner)]
-Benefit: [Section Benefit (normalized one-liner)]
-<blank line>
-Jump [jump number]
-[Jump Title]
-Jump Type: [Jump Type]
-Description: [Jump Description]
-Benefit: [Jump Benefit]
-<blank line>
-(Repeat Jump block for all jumps in the section. Leave exactly one blank line after each Jump block and after the final Jump of each section.)
+OUTPUT WHEN SECTION_TITLES = INCLUDE (default)
+• RENDERED:
+  <blank line>
+  Section [Section Number]: [Section Title]
+  Description: [Section Description (normalized)]
+  Benefit: [Section Benefit (normalized)]
+  <blank line>
+  Jump [jump number]
+  [Jump Title]
+  Jump Type: [Jump Type]
+  Description: [Jump Description]
+  Benefit: [Jump Benefit]
+  <blank line>
+  (Repeat Jump block for all jumps. Leave exactly one blank line after each Jump block and after the final Jump of the section.)
 
-Output (RAW WITH MARKERS):
-[SP]
-Section [Section Number]: [Section Title][LB]
-Description: [Section Description (normalized one-liner)][LB]
-Benefit: [Section Benefit (normalized one-liner)][LB]
-[SP]
-Jump [jump number][LB]
-[Jump Title][LB]
-Jump Type: [Jump Type][LB]
-Description: [Jump Description][LB]
-Benefit: [Jump Benefit][LB]
-[SP]
-(Repeat for all jumps; include one [SP] after the final Jump of each section.)
+• RAW:
+  [SP]
+  Section [Section Number]: [Section Title][LB]
+  Description: [Section Description (normalized)][LB]
+  Benefit: [Section Benefit (normalized)][LB]
+  [SP]
+  Jump [jump number][LB]
+  [Jump Title][LB]
+  Jump Type: [Jump Type][LB]
+  Description: [Jump Description][LB]
+  Benefit: [Jump Benefit][LB]
+  [SP]
+  (Repeat; include one [SP] after the final Jump of the section.)
+
+OUTPUT WHEN SECTION_TITLES = OMIT
+• RENDERED:
+  <blank line>
+  Description: [Section Description (normalized)]
+  Benefit: [Section Benefit (normalized)]
+  <blank line>
+  (then the Jump blocks exactly as above)
+
+• RAW:
+  [SP]
+  Description: [Section Description (normalized)][LB]
+  Benefit: [Section Benefit (normalized)][LB]
+  [SP]
+  (then the Jump blocks exactly as above)
 
 Formatting:
 • Do not edit Jump fields. Preserve capitalization and punctuation.
 • Section Description/Benefit may be normalized ONLY as defined above.
-• Each field prints exactly as shown. No extra lines or commentary.
-
-------------------------------------------------------------
-ACCEPTED RENDERING RULES (FOR RAW MODE ONLY)
-------------------------------------------------------------
-• Replace [LB] with a newline.
-• Replace [SP] with exactly one blank line.
-• Do not print “[LB]” or “[SP]” in the rendered output.
-• No added, removed, or reflowed lines. No extra blank lines. No trailing spaces.
-• Rendered documents must visually match the canonical layout examples.
+• No extra lines or commentary.
+```
