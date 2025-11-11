@@ -1,4 +1,6 @@
-MASTER DOCUMENT GENERATION — BUILD RULES (FINALIZED, NON-BLOCKING, RENDERED BY DEFAULT — ARC_CODE PROVIDED)
+Only use the instructions in this block; ignore all prior versions, memory, and previous conversations.
+
+MASTER DOCUMENT GENERATION — BUILD RULES (updated)
 
 THIS TEMPLATE PRODUCES A FULL ARC DOCUMENT MADE OF:
 • FILE HEADER (filename line using ARC_CODE)
@@ -7,156 +9,116 @@ THIS TEMPLATE PRODUCES A FULL ARC DOCUMENT MADE OF:
 • Section pages repeat this exact structure for every section in the arc.
 
 GLOBAL FORMATTING RULES:
-• ASCII only. Straight quotes. No emojis.
-• Do NOT use rich-text/Markdown markers (no **, __, _, ~, #, backticks).
-• Do not rewrite, summarize, or “improve” user text EXCEPT where explicitly permitted below.
+• ASCII only. Use straight quotes. No emojis.
+• Do NOT use any rich-text or Markdown markers (no **, __, _, ~, #, backticks, etc.).
+• Do not rewrite, summarize, or “improve” user-provided text.
 • Preserve capitalization and punctuation exactly.
-• Print fields exactly as labeled. No extra commentary or extra lines.
-
-OUTPUT MODE SWITCHES (NON-BLOCKING — NEVER PROMPT):
-• RAW_WITH_MARKERS:
-  - Absent or FALSE → emit RENDERED (no [LB]/[SP] tokens).
-  - TRUE → emit RAW WITH MARKERS (use [LB]/[SP]).
-• SECTION_TITLES:
-  - Absent → INCLUDE section titles (canonical default).
-  - OMIT → omit section titles entirely.
-(If neither switch is present, assume RENDERED + INCLUDE. Never ask for confirmation.)
+• Print fields exactly as labeled below. No extra commentary or lines beyond what is specified.
 
 ------------------------------------------------------------
-FILE HEADER — ARC_CODE (PROVIDED BY USER)
+ARC_CODE — GENERATION AND USE
 ------------------------------------------------------------
-Requirement:
-• The ARC_CODE is provided in the prompt. Use it EXACTLY as given. Do not alter, expand, or auto-generate.
+ARC_CODE PURPOSE:
+• Short code (3–4 characters) that tags all files for the arc.
 
-Filename line (MUST BE FIRST OUTPUT LINE):
-• RENDERED: <ARC_CODE>_arc_breakdown.txt
-• RAW: <ARC_CODE>_arc_breakdown.txt[LB]
-• After the filename line: exactly one blank line (RENDERED) or one [SP] (RAW).
-• If ARC_CODE is missing, stop and output a single line: MISSING ARC_CODE
+ARC_CODE INPUT/DEFAULT:
+• Generate an ARC_CODE:
+  - 3–4 uppercase characters (A–Z, 0–9 allowed).
+  - Derive from the arc title’s significant words.
+  - Keep numerals that appear in the title (e.g., 3I in “3I/ATLAS”).
+  - Ignore common stopwords (THE, A, AN, AND, OF, TO, FOR).
+  - For compound words (slash or hyphen), you may take 1–2 letters from each part to reach 3–4 total.
+  - Prefer readability and uniqueness within the project.
+  - Examples:
+    • 3I/ATLAS Attunement → 3IAT
+    • Quantum Jump Primer → QJP
+    • Infinite Concentration → ICN
+    • Return of the Eight Senses → ROES
+
+FILENAME LINE (MUST BE FIRST LINE OF OUTPUT):
+
+• <ARC_CODE>_arc_breakdown.txt
+• Replace <ARC_CODE> with the generated/provided code.
+• Example: QJP_arc_breakdown.txt
+• After printing the filename line, output exactly two blank lines (two empty newlines with no spaces or tabs), then begin PAGE 1.
+• Spacing: One blank line must appear between the filename line and ARC TITLE. No other extra blank lines are allowed.
 
 ------------------------------------------------------------
 PAGE 1 — ARC TITLE + ARC DESCRIPTION — BUILD RULES
 ------------------------------------------------------------
-Inputs:
+
+INPUT FIELDS:
 • ARC Name
 • ARC Description
 
-Output (RENDERED default):
-<blank line>
+OUTPUT STRUCTURE (exact):
 ARC TITLE:  [ARC Name]
-<blank line>
 Description:  [ARC Description paragraph(s)]
-<blank line>
 
-Output (RAW):
-[SP]
-ARC TITLE:  [ARC Name][LB]
-[SP]
-Description:  [ARC Description paragraph(s)][LB]
-[SP]
+FORMATTING RULES:
+• Labels appear exactly as shown above (plain text; not bold).
+• ARC TITLE appears first, followed by a colon, then the ARC Name on the next line.
+• The label “Description:” appears exactly as written, followed by the description text on the same line.
+• No extra commentary, no additional sentences, no generated embellishments.
+• Use the ARC Name and Description exactly as provided in raw input.
+• After printing "Description: [ARC Description]" on PAGE 1, emit exactly four blank lines.
 
-Non-blocking:
-• If ARC Name and ARC Description exist, print them as-is. Only prompt if a field is missing.
-
-Formatting:
-• Labels are plain text. “ARC TITLE:” and the name appear on the same line.
-• “Description:” and the description appear on the same line.
-• Exactly one blank line (or [SP]) between blocks. No leading blank lines before the filename line.
 
 ------------------------------------------------------------
-SECTION DESCRIPTION & BENEFIT — MICRO-RULE ENFORCEMENT (NO PROMPTS)
+PAGE 2+ — SECTION PAGE — BUILD RULES
 ------------------------------------------------------------
-Purpose:
-• Ensure Section Description and Section Benefit match canonical one-line formats.
 
-Rule:
-• ALWAYS output each as a SINGLE sentence using the templates below. This normalization is the ONLY permitted rewrite and is NON-BLOCKING.
-
-Templates:
-• Section Description:
-  This section is about [gain 1], [gain 2], and [gain 3] so [practical outcome].
-• Section Benefit:
-  The benefit of this section is that you will [benefit 1], [benefit 2], [benefit 3], and [benefit 4].
-
-Normalization algorithm (deterministic):
-1) From the supplied text, extract up to three core “gains.” If >3, pick the central three; if <3, borrow missing items from the section’s Benefit text.
-2) Derive one practical outcome clause from the same source (or Benefit if clearer).
-3) Compress the Benefit to one sentence with up to four comma-separated items, preserving meaning without adding claims.
-4) Plain present tense; simple words; ASCII only.
-5) Do not invent new domain content; only recombine/shorten what was supplied.
-
-Precedence:
-• If user lines already match the templates exactly, print them unchanged.
-• Otherwise normalize per the algorithm. Do NOT prompt.
-
-------------------------------------------------------------
-PAGE 2+ — SECTION PAGES — BUILD RULES
-------------------------------------------------------------
-Inputs per section:
+INPUT FIELDS PER SECTION:
 • Section Number (integer)
 • Section Title (text)
-• Section Description (paragraph or one-liner; will be normalized)
-• Section Benefit (paragraph or one-liner; will be normalized)
+• Section Description (one sentence per micro-rules)
+• Section Benefit (one sentence per micro-rules)
 
-Inputs for all jumps:
-For each jump:
+INPUT FIELDS FOR ALL JUMPS:
+(These may be supplied separately from section list)
+For each jump (per line):
 • Jump Title
 • Jump Type
 • Jump Description
 • Jump Benefit (may contain multiple sentences)
-• Jump Section Reference (e.g., "Section 2: Learning That Sticks")
+• Jump Section Reference (ex: "Section 2: Learning That Sticks")
 
-Parsing:
-• Jump numbering follows provided sequence and continues across sections.
-• Section membership derives from Jump Section Reference.
-• Jumps are grouped by their Section Reference and printed in that group’s order.
+PARSING RULES:
+• Jump numbering is assigned automatically based on sequence order.
+• Jump numbering continues from arc start (so Section 2 begins where Section 1 ended).
+• Jumps for each section are determined by matching Section Reference text.
+• Jumps are always printed in the exact order they are provided in the jump dataset.
 
-OUTPUT WHEN SECTION_TITLES = INCLUDE (default)
-• RENDERED:
-  <blank line>
-  Section [Section Number]: [Section Title]
-  Description: [Section Description (normalized)]
-  Benefit: [Section Benefit (normalized)]
-  <blank line>
-  Jump [jump number]
+OUTPUT STRUCTURE (exact):
+
+Section [Section Number]: [Section Title]
+Description: [Section Description]
+Benefit: [Section Benefit]
+
+Jump [jump number]
+[Jump Title]
+Jump Type: [Jump Type]
+Description: [Jump Description]
+Benefit: [Jump Benefit]
+
+(then repeat Jump block for all jumps belonging to that section)
+
+SPACING (MANDATORY):
+• After the Section Benefit line, emit three blank lines, then start the first Jump of that section.
+• Within a Jump block, print the 5 lines with NO blank lines between them:
+  Jump [n]
   [Jump Title]
-  Jump Type: [Jump Type]
-  Description: [Jump Description]
-  Benefit: [Jump Benefit]
-  <blank line>
-  (Repeat Jump block for all jumps. Leave exactly one blank line after each Jump block and after the final Jump of the section.)
+  Jump Type: ...
+  Description: ...
+  Benefit: ...
+• After the Jump Benefit line, emit 1 blank line.
+• Between consecutive jumps, there is exactly 1 blank line (created by the rule above).
+• After the final Jump of a section, emit 4 blank lines, then start the next Section header.
 
-• RAW:
-  [SP]
-  Section [Section Number]: [Section Title][LB]
-  Description: [Section Description (normalized)][LB]
-  Benefit: [Section Benefit (normalized)][LB]
-  [SP]
-  Jump [jump number][LB]
-  [Jump Title][LB]
-  Jump Type: [Jump Type][LB]
-  Description: [Jump Description][LB]
-  Benefit: [Jump Benefit][LB]
-  [SP]
-  (Repeat; include one [SP] after the final Jump of the section.)
 
-OUTPUT WHEN SECTION_TITLES = OMIT
-• RENDERED:
-  <blank line>
-  Description: [Section Description (normalized)]
-  Benefit: [Section Benefit (normalized)]
-  <blank line>
-  (then the Jump blocks exactly as above)
-
-• RAW:
-  [SP]
-  Description: [Section Description (normalized)][LB]
-  Benefit: [Section Benefit (normalized)][LB]
-  [SP]
-  (then the Jump blocks exactly as above)
-
-Formatting:
-• Do not edit Jump fields. Preserve capitalization and punctuation.
-• Section Description/Benefit may be normalized ONLY as defined above.
-• No extra lines or commentary.
-```
+FORMATTING RULES:
+• Do not rewrite or edit any user-provided text.
+• Preserve all capitalization and punctuation exactly.
+• Benefit may be multiple sentences exactly as provided.
+• Each field prints exactly as shown above (plain text labels; no styling).
+• No commentary or extra sentences outside this structure.
