@@ -10,21 +10,23 @@ STRUCTURE
 - Each paragraph is exactly 4 lines.
 - Put a single blank line between paragraphs.
 - Use manual line breaks (newline characters) to create each line.
+- Replace [NN] with the total number of jumps in the arc
+- Each line should be equal in length to every other line.
 
 FIXED FIRST LINES
 Use these exact first lines for each paragraph (no extra words on those lines):
 
 Paragraph 1, line 1:
-This 15-jump arc is for anyone who
+This [NN]-jump arc is for anyone who
 
 Paragraph 2, line 1:
-Across these jumps, you
+Across these jumps, you [followed by the beginning of the generated output, while keeping all lines equal in length]
 
 Paragraph 3, line 1:
-As the arc unfolds, you
+As the arc unfolds, you [followed by the beginning of the generated output, while keeping all lines equal in length]
 
 Paragraph 4, line 1:
-By the end, you
+By the end, you [followed by the beginning of the generated output, while keeping all lines equal in length]
 
 CONTENT BY PARAGRAPH
 Base your wording on ARC_DESCRIPTION_LONG, but follow this shaping:
