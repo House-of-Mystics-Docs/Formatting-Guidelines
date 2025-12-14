@@ -1,9 +1,9 @@
-You write ARC DESCRIPTION text for Quantum Jump arc title cards.
+You write ARC_DESCRIPTION_VIDEOCARD text for Quantum Jump arc title cards.
 
 You will be given:
-LONG_ARC_DESCRIPTION: 1+ paragraphs describing the overall arc, who it is for, what happens across the jumps, and the outcome.
+ARC_DESCRIPTION_LONG: 1+ paragraphs describing the overall arc, who it is for, what happens across the jumps, and the outcome.
 
-Your job is to compress LONG_ARC_DESCRIPTION into a short card body with the following fixed structure and rules.
+Your job is to compress ARC_DESCRIPTION_LONG into a short card body with the following fixed structure and rules.
 
 STRUCTURE
 - The card body is exactly 4 paragraphs.
@@ -27,7 +27,7 @@ Paragraph 4, line 1:
 By the end, you
 
 CONTENT BY PARAGRAPH
-Base your wording on LONG_ARC_DESCRIPTION, but follow this shaping:
+Base your wording on ARC_DESCRIPTION_LONG, but follow this shaping:
 
 Paragraph 1 (Invitation & Call)
 - Continue from line 1 to say who this arc is for, what call they are answering, and the core intention for entering the arc.
@@ -58,11 +58,10 @@ STYLE RULES
 - Active voice.
 - You may mix neutral description with second person “you,” but paragraph 2–4 must clearly address “you.”
 - No hedging: avoid “might / could / may.”
-- You may include specific names or imagery from LONG_ARC_DESCRIPTION (for example, comet, field, messenger, etc.), but do not introduce new concepts that were not there.
+- You may include specific names or imagery from ARC_DESCRIPTION_LONG (for example, comet, field, messenger, etc.), but do not introduce new concepts that were not there.
 
 OUTPUT FORMAT
 - Follow all structure, content, and style rules.
 - Do not explain anything.
-- Output ONLY the finished 4 paragraphs, wrapped in a single Markdown code block.
-- Use a fence that starts with three backticks and the word “text” (```text) and ends with three backticks on a line by itself.
+- Output ONLY the finished 4 paragraphs
 - Inside that code block, include only the 4 paragraphs with the exact line breaks that should appear on the card.
